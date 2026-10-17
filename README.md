@@ -1,7 +1,6 @@
 #  API Sentinel — API Testing Tool
 
 **Team Name:** codeX  
-
 **Domain:** Developer Tools / Backend Engineering  
 **Event:** ACM Online Buildathon
 
@@ -65,18 +64,19 @@ The application focuses on simplicity, usability, and essential API testing func
 6. Inspect the response status, response time, headers, and body.
 7. Review the validation results to identify passed and failed checks.
 
-## 🌐 Live Application
+##  Live Application
 
 **Deployed URL:** [PASTE YOUR LIVE NETLIFY URL HERE]
 
-## 🎥 Demo Video
+
+##  Demo Video
 
 **Demo Video (Unlisted YouTube):** [PASTE YOUR YOUTUBE VIDEO LINK HERE]
 
 The demonstration covers the application interface, sending HTTP requests, inspecting responses, and validating test results.
 
 
-## 👥 Team Members
+## Team Members
 
 1. **[Member 1 Name]** — [Role]
 2. **[Member 2 Name]** — [Role]
@@ -84,7 +84,7 @@ The demonstration covers the application interface, sending HTTP requests, inspe
 4. **[Member 4 Name]** — [Role]
 
  
-## 📄 Acknowledgment
+##  Acknowledgment
 
 Developed as part of the ACM Online Buildathon.
 
