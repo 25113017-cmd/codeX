@@ -4,11 +4,19 @@
 **Domain:** Developer Tools / Backend Engineering  
 **Event:** ACM Online Buildathon
 
+
+
+
+
 ## Project Overview
 
 API Sentinel is a web-based API testing tool that helps developers send HTTP requests, inspect API responses, and validate expected results through a simple, user-friendly interface.
 
 It provides essential API testing features in one place, making it easier to identify errors, inspect response data, and verify basic API behavior without requiring a separate desktop application.
+
+
+
+
 
 ##  Problem Statement
 
@@ -16,11 +24,19 @@ Developers need a quick and convenient way to test APIs, inspect responses, and 
 
 API Sentinel addresses this problem by providing a unified interface for sending requests, viewing responses, and running basic validation checks.
 
+
+
+
+
 ##  Our Solution
 
 API Sentinel allows users to configure and send HTTP requests, inspect response details, and verify whether API responses meet specified expectations.
 
 The application focuses on simplicity, usability, and essential API testing functionality.
+
+
+
+
 
 ##  Key Features
 
@@ -36,6 +52,9 @@ The application focuses on simplicity, usability, and essential API testing func
 - **Responsive Interface:** Designed for convenient use across supported screen sizes.
 - **Request Modes:** Provides Browser Direct and Server Proxy options, subject to the configured backend implementation.
 
+
+
+
 ##  Technology Stack
 
 - **Frontend:** React
@@ -44,6 +63,10 @@ The application focuses on simplicity, usability, and essential API testing func
 - **Build Tool:** Vite
 - **Deployment:** Netlify
 - **Version Control:** Git and GitHub
+
+
+
+
 
 ### Tech Stack Justification
 
@@ -66,8 +89,13 @@ The application focuses on simplicity, usability, and essential API testing func
 
 
 
+
+
+
 ##  Live Application
 **Deployed URL:** https://api-testing-tool-cc4776.netlify.app/
+
+
 
 
 
@@ -79,12 +107,20 @@ The demonstration covers the application interface, sending HTTP requests, inspe
 
 
 
+
+
+
+
 ## Team Members
 
 1. **[Shreyash Pakhare]** — [Frontend Developer & UI/UX Designer]
 2. **[Ritesh Daund]** — [Backend Developer & API Integration]
 3. **[Ruturaj Nikam]** — [Deployment, GitHub & Documentation Lead]
 4. **[Omkar Athare]** — [Testing & Quality Assurance (QA)]
+
+
+
+
 
  
 ##  Acknowledgment
