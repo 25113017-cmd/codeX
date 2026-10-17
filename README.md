@@ -64,24 +64,27 @@ The application focuses on simplicity, usability, and essential API testing func
 6. Inspect the response status, response time, headers, and body.
 7. Review the validation results to identify passed and failed checks.
 
-##  Live Application
 
-**Deployed URL:** [PASTE YOUR LIVE NETLIFY URL HERE]
+
+##  Live Application
+**Deployed URL:** https://api-testing-tool-cc4776.netlify.app/
+
+
 
 
 ##  Demo Video
-
 **Demo Video (Unlisted YouTube):** [PASTE YOUR YOUTUBE VIDEO LINK HERE]
 
 The demonstration covers the application interface, sending HTTP requests, inspecting responses, and validating test results.
 
 
+
 ## Team Members
 
-1. **[Member 1 Name]** — [Role]
-2. **[Member 2 Name]** — [Role]
-3. **[Member 3 Name]** — [Role]
-4. **[Member 4 Name]** — [Role]
+1. **[Shreyash Pakhare]** — [Frontend Developer & UI/UX Designer]
+2. **[Ritesh Daund]** — [Backend Developer & API Integration]
+3. **[Ruturaj Nikam]** — [Deployment, GitHub & Documentation Lead]
+4. **[Omkar Athare]** — [Testing & Quality Assurance (QA)]
 
  
 ##  Acknowledgment
