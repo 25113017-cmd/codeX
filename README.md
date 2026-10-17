@@ -1,153 +1,90 @@
-# API Sentinel — API Testing Tool
+#  API Sentinel — API Testing Tool
 
-**Live deployment:** https://api-testing-tool-cc4776.netlify.app
-**Demo video:** _add your link here_ (e.g. YouTube / Loom)
+**Team Name:** codeX  
 
-## Team members
+**Domain:** Developer Tools / Backend Engineering  
+**Event:** ACM Online Buildathon
 
-| Name | Role |
-| ---- | ---- |
-| _Add name_ | _e.g. Frontend_ |
-| _Add name_ | _e.g. Backend / security_ |
-| _Add name_ | _e.g. Design / docs_ |
+## Project Overview
 
----
+API Sentinel is a web-based API testing tool that helps developers send HTTP requests, inspect API responses, and validate expected results through a simple, user-friendly interface.
 
-## Problem statement
+It provides essential API testing features in one place, making it easier to identify errors, inspect response data, and verify basic API behavior without requiring a separate desktop application.
 
-Developers constantly need to check that an API behaves as expected: does it return the right status code, is it fast enough, and does the JSON contain the fields the frontend depends on? Desktop tools are heavy to install, and browser-based tools run into **CORS** — most APIs don't allow arbitrary websites to call them, so the browser silently blocks the response. Naïvely adding a server-side proxy fixes CORS but opens a serious hole: **SSRF** (server-side request forgery), where attackers use the proxy to reach `localhost`, private networks or cloud metadata endpoints such as `169.254.169.254`.
+##  Problem Statement
 
-## Solution
+Developers need a quick and convenient way to test APIs, inspect responses, and identify failures. Manually checking status codes, response bodies, and expected JSON fields can make API debugging less efficient.
 
-API Sentinel is a browser-based API workbench with a **hardened serverless proxy**:
+API Sentinel addresses this problem by providing a unified interface for sending requests, viewing responses, and running basic validation checks.
 
-- Build any GET / POST / PUT / PATCH / DELETE request with headers and a validated JSON body.
-- Send it through the proxy (no CORS limits, full response headers) or **directly from the browser** (to see exactly what a frontend would see, with CORS failures explained).
-- Inspect status, timing, size, headers and syntax-highlighted JSON.
-- Declare expectations — status code, max response time, required JSON field paths with optional expected values — and get honest **PASS / FAIL** results with totals and a pass percentage. A check passes only when it was actually evaluated against a real response and held; failed requests mark every check as **FAIL (not executed)**.
+##  Our Solution
 
-## Features
+API Sentinel allows users to configure and send HTTP requests, inspect response details, and verify whether API responses meet specified expectations.
 
-**Request builder**
-- URL bar with HTTP method selector, **Send** (or `Ctrl/⌘ + Enter`) and **Clear**.
-- Headers editor: key/value rows with enable toggles, quick-add presets, and masked values for secrets (`Authorization`, `Cookie`, `X-API-Key`, …).
-- Body editor: None / JSON / Text, line numbers, live JSON validation with line & column, Format and Minify.
-- Settings: timeout (1–20 s) and follow-redirects toggle.
-- Copy as cURL (secret header values are redacted).
-- URL, headers, JSON body and test configuration are all validated **before** anything is sent.
+The application focuses on simplicity, usability, and essential API testing functionality.
 
-**Response inspector**
-- Status code + text (colour-coded), response time in ms, body size, transport (proxy/browser), redirect count.
-- Pretty (highlighted) and Raw JSON views; non-JSON bodies shown as text; binary bodies summarised.
-- Full response headers table, redirect chain, and a list of request headers the proxy refused to forward.
-- Loading state with a live timer and Cancel button.
-- Specific, actionable error states: CORS / network, mixed content, timeout, DNS failure, connection refused, TLS error, blocked destination, unsafe redirect, response too large, proxy unavailable.
+##  Key Features
 
-**Validation / tests**
-- Expected status code, optional maximum response time, and any number of JSON field paths (`user.id`, `items[0].name`, `data["key.with.dots"]`) with an optional expected value.
-- Each check shows PASS / FAIL with expected vs actual values; summary shows total, passed, failed and pass percentage.
-- Editing checks after a run marks the results stale and lets you re-run them against the same response.
+- **Multiple HTTP Methods:** Supports GET, POST, PUT, PATCH, and DELETE requests.
+- **Custom Request Headers:** Configure request headers using key-value pairs.
+- **Request Body Editor:** Enter JSON data for requests that require a body.
+- **Response Inspector:** View HTTP status codes, response time, response headers, and response body.
+- **Status Code Validation:** Compare the actual HTTP status code with the expected status.
+- **JSON Field Validation:** Check whether specified fields exist in the response.
+- **Test Results Summary:** Display passed and failed validation checks.
+- **Sample Requests:** Quickly try predefined requests for common testing scenarios.
+- **Error Handling:** Display useful feedback for unsuccessful requests and invalid inputs.
+- **Responsive Interface:** Designed for convenient use across supported screen sizes.
+- **Request Modes:** Provides Browser Direct and Server Proxy options, subject to the configured backend implementation.
 
-**Samples** — one click loads real requests against JSONPlaceholder, httpbin and example.com, including deliberately failing cases (404, non-JSON page, timeout, and a blocked metadata request that demonstrates the SSRF protection).
+##  Technology Stack
 
-## Security model of the proxy
+- **Frontend:** React
+- **Programming Language:** TypeScript / JavaScript
+- **Styling:** Tailwind CSS
+- **Build Tool:** Vite
+- **Deployment:** Netlify
+- **Version Control:** Git and GitHub
 
-The proxy is a Netlify Function (`netlify/functions/proxy.mts` → `src/server/proxy.ts`).
+### Tech Stack Justification
 
-| Protection | How |
-| --- | --- |
-| Scheme allow-list | Only `http:` and `https:`; URLs with embedded `user:pass@` are rejected. |
-| Private / internal targets | Hostnames like `localhost`, `*.local`, `*.internal`, `metadata.google.internal` are refused. Every IP is checked against loopback, RFC 1918 private, link-local (`169.254.0.0/16`, cloud metadata), CGNAT, multicast, reserved, IPv6 ULA/link-local, NAT64/6to4/Teredo and IPv4-mapped IPv6 ranges (`src/server/net-guard.ts`). |
-| DNS rebinding | The IP check runs inside the socket's own DNS lookup, so the address that is validated is the address that is connected to. No connection pooling. |
-| Obfuscated IPs | URLs are parsed with the WHATWG parser, so `http://2130706433/` or `http://0x7f.1/` normalise to `127.0.0.1` and are blocked. |
-| Redirects | Followed manually (max 5). Each hop is re-validated; HTTPS→HTTP downgrades and non-HTTP targets are refused; `Authorization` and `Cookie` are dropped when the origin changes. |
-| Timeouts | A single deadline (default 10 s, max 20 s) covers DNS, connect, redirects and body download. |
-| Size limits | Request body ≤ 1 MB; response body ≤ 2 MB **after** decompression (zip-bomb safe). |
-| Header hygiene | `Host`, `Content-Length`, hop-by-hop and `X-Forwarded-*` headers are not forwarded; header names/values are validated against CR/LF injection. |
-| No secret leakage | Request URLs, headers and bodies are never logged or stored. The only log line is an error class name for unexpected internal errors. |
-| Cross-site abuse | Browser calls from other origins are rejected and no CORS headers are sent. |
+- **React:** Supports reusable UI components and interactive request and response panels.
+- **TypeScript:** Helps identify certain programming errors through static type checking, if enabled in the project.
+- **Tailwind CSS:** Enables consistent styling and responsive layouts.
+- **Vite:** Provides a fast development server and production build process.
+- **Netlify:** Hosts the public application and supports continuous deployment from a connected repository.
+- **GitHub:** Maintains the source code, commit history, and project documentation.
 
-**Known limitation:** there is no rate limiting. For a public long-running deployment, add Netlify's rate-limiting rules or an API key check in front of the function.
+##  How It Works
 
-## Technology stack
+1. Select an HTTP method.
+2. Enter the target API URL.
+3. Configure request headers and body when required.
+4. Define expected status codes or required JSON fields in the Tests section.
+5. Send the request.
+6. Inspect the response status, response time, headers, and body.
+7. Review the validation results to identify passed and failed checks.
 
-| Layer | Technology |
-| --- | --- |
-| UI | React 19, TypeScript (strict), Tailwind CSS 4, Radix UI primitives (shadcn/ui), lucide icons, sonner toasts |
-| App framework | TanStack Start + TanStack Router, built with Vite |
-| Proxy backend | Netlify Functions (Node.js `http`/`https`, `zlib`, `dns`), Zod payload validation |
-| Tests | Vitest + Testing Library |
-| Hosting | Netlify |
+## 🌐 Live Application
 
-## Setup
+**Deployed URL:** [PASTE YOUR LIVE NETLIFY URL HERE]
 
-Requirements: Node.js 22.13+ (or 24+), pnpm (or npm), and the Netlify CLI for running the proxy locally.
+## 🎥 Demo Video
 
-```bash
-pnpm install
-npx netlify dev        # http://localhost:8888 — app + proxy function together
-```
+**Demo Video (Unlisted YouTube):** [PASTE YOUR YOUTUBE VIDEO LINK HERE]
 
-`npm run dev` starts only the Vite app on port 3000; the **Proxy** mode will then show "Proxy unavailable" because the serverless function is not running. Use `netlify dev`, or switch to **Direct** mode.
+The demonstration covers the application interface, sending HTTP requests, inspecting responses, and validating test results.
 
-Other commands:
 
-```bash
-pnpm test          # unit tests: JSON paths, assertions, request validation, SSRF guard
-pnpm typecheck
-pnpm lint
-pnpm build
-```
+## 👥 Team Members
 
-### Environment variables
+1. **[Member 1 Name]** — [Role]
+2. **[Member 2 Name]** — [Role]
+3. **[Member 3 Name]** — [Role]
+4. **[Member 4 Name]** — [Role]
 
-**None are required.** The app has no API keys or secrets of its own; any credentials a user types into the headers editor are sent only to the API they target and are never stored or logged.
+ 
+## 📄 Acknowledgment
 
-### Deploying
+Developed as part of the ACM Online Buildathon.
 
-Connect the repository to Netlify (or run `netlify deploy --prod`). `netlify.toml` already sets the build command (`vite build`), publish directory (`dist/client`) and security headers; the function in `netlify/functions/` deploys automatically and is served at `/.netlify/functions/proxy`.
-
-## Architecture
-
-```
-Browser (React UI)
-   │  Proxy mode: POST /.netlify/functions/proxy  { url, method, headers, body, timeoutMs, followRedirects }
-   │  Direct mode: fetch(url) straight from the browser (CORS applies)
-   ▼
-Netlify Function  netlify/functions/proxy.mts
-   └─ src/server/proxy.ts   validate payload → validate URL → guarded request (net-guard) →
-                            manual redirects → decompress with size cap → JSON envelope
-   ▼
-Target API
-```
-
-Both paths return one normalised `ExecResult` (`src/lib/http-client.ts`). The UI evaluates checks locally with `runChecks` (`src/lib/assertions.ts`) against that real result.
-
-### Main files
-
-| File | Purpose |
-| --- | --- |
-| `src/routes/index.tsx` | Home route; renders the workbench. |
-| `src/routes/__root.tsx` | HTML shell, title/meta, fonts, dark mode. |
-| `src/components/sentinel/workbench.tsx` | Page state: draft request, tests, send/cancel/clear, results. |
-| `src/components/sentinel/request-panel.tsx` | URL bar and Request panel tabs (Headers, Body, Tests, Settings). |
-| `src/components/sentinel/response-panel.tsx` | Response panel: status bar, Body, Headers, Test Results, loading/empty/error states. |
-| `src/components/sentinel/test-results.tsx` | PASS/FAIL list and summary statistics. |
-| `src/components/sentinel/*-editor.tsx` | Headers, body, tests and settings editors. |
-| `src/components/sentinel/json-view.tsx` | Line-numbered, syntax-highlighted code view. |
-| `src/lib/request-draft.ts` | Editable request model, pre-send validation, cURL export. |
-| `src/lib/http-client.ts` | Sends via proxy or directly; maps every failure to a clear error. |
-| `src/lib/assertions.ts` | Test configuration, validation and check evaluation. |
-| `src/lib/json-path.ts` | Path parser/resolver for `user.id`, `items[0]`, `["a.b"]`. |
-| `src/lib/samples.ts` | One-click sample requests. |
-| `src/lib/api-types.ts` | Types and limits shared by browser and proxy. |
-| `src/server/proxy.ts` | Proxy implementation and HTTP handler. |
-| `src/server/net-guard.ts` | SSRF hostname/IP block lists and guarded DNS lookup. |
-| `netlify/functions/proxy.mts` | Netlify Function entry point. |
-
-## Roadmap ideas
-
-- Saved request collections and history (would use Netlify Database).
-- Environment variables / `{{baseUrl}}` templating.
-- Query-parameter editor and form-data bodies.
-- Rate limiting on the proxy.
